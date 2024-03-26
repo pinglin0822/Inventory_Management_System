@@ -5,6 +5,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\postController;
+
 use Illuminate\Http\Request;
 
 /*
@@ -80,6 +82,13 @@ Route::post('/insert-customer',[CustomerController::class,'store'])->middleware(
 
 Route::get('/all-customers',[CustomerController::class,'customersData'])->middleware(['auth'])->name('all.customers');
 
+//post
+Route::get('/posts',[postController::class,'index'])->name('postlist');//route to post list page
+Route::get('/newpost', [postController::class,'create'])->middleware(['auth'])->name('createpost');//route to create post page
+Route::post('/insert-new-post',[postController::class,'store'])->name('newpost');//logic to create new post
+Route::get('/posts/{id}',[postController::class,'show'])->name('showlist');//route to edit post page
+Route::put('/edit-post/{id}',[postController::class,'update'])->name('editpost');//logic to edit post
+Route::delete('/posts/{id}',[postController::class,'destroy'])->name('deletepost');//logic to delete post
 
 Route::get('/dashboard', function () {
     return view('dashboard');
