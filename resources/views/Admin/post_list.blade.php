@@ -16,7 +16,9 @@
                         <th>Title</th>
                         <th>User</th>
                         <th>Content</th>
+                        @if($isAdmin)
                         <th>Action</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -25,6 +27,7 @@
                         <td>{{ $row->title }}</td>
                         <td>{{ $row->user_id }}</td>
                         <td>{{ $row->content }}</td>
+                        @if($isAdmin)
                         <td>
                             <a href="/posts/{{$row->id}}" class="btn btn-sm btn-info">Edit</a>
                             <form action="{{ route('deletepost', $row->id) }}" method="POST" style="display: inline-block;">  @csrf
@@ -32,6 +35,7 @@
                               <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
                             </form>
                           </td>
+                        @endif
                     </tr>
                     @endforeach
                     
