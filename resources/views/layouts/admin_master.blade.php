@@ -121,21 +121,32 @@ Products<!DOCTYPE html>
                                     <a class="nav-link" href="{{ route('all.customers') }}">Customers List</a>
                                 </nav>
                             </div>
+                            @if(auth()->check() && auth()->user()->role === 'admin')
                             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePost" aria-expanded="false" aria-controls="collapseAuthentication">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                 Posts
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
+                            
                             <div class="collapse" id="collapsePost" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="{{ route('createpost') }}">New Post</a>
                                 </nav>
                             </div>
+                            
                             <div class="collapse" id="collapsePost" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="{{ route('postlist') }}">Posts List</a>
                                 </nav>
                             </div>
+                            @endif
+                            @if(auth()->check() && auth()->user()->role === 'user')
+                            <a class="nav-link "  href="{{ route('postlist') }}"  >
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                Posts List
+                            </a>
+                            @endif
+
 
                             
                             

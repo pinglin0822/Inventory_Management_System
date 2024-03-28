@@ -29,48 +29,48 @@ Route::get('/add-product', function () {
     return view('Admin.add_product');
 })->middleware(['auth'])->name('add.product');
 
-Route::post('/insert-product',[ProductController::class,'store'])->middleware(['auth']);
+Route::post('/insert-product', [ProductController::class, 'store'])->middleware(['auth']);
 
-Route::get('/all-product',[ProductController::class,'allProduct'])->middleware(['auth'])->name('all.product');
+Route::get('/all-product', [ProductController::class, 'allProduct'])->middleware(['auth'])->name('all.product');
 
-Route::get('/available-products',[ProductController::class,'availableProducts'])->middleware(['auth'])->name('available.products');
+Route::get('/available-products', [ProductController::class, 'availableProducts'])->middleware(['auth'])->name('available.products');
 
-Route::get('/purchase-products/{id}', [ProductController::class,'purchaseData'])->middleware(['auth']);
+Route::get('/purchase-products/{id}', [ProductController::class, 'purchaseData'])->middleware(['auth']);
 
-Route::post('/insert-purchase-products',[ProductController::class,'storePurchase'])->middleware(['auth']);
+Route::post('/insert-purchase-products', [ProductController::class, 'storePurchase'])->middleware(['auth']);
 
 
 //invoice
-Route::get('/add-invoice/{id}', [InvoiceController::class,'formData'])->middleware(['auth']);
+Route::get('/add-invoice/{id}', [InvoiceController::class, 'formData'])->middleware(['auth']);
 
-Route::get('/new-invoice', [InvoiceController::class,'newformData'])->middleware(['auth'])->name('new.invoice');
+Route::get('/new-invoice', [InvoiceController::class, 'newformData'])->middleware(['auth'])->name('new.invoice');
 
-Route::post('/insert-invoice',[InvoiceController::class,'store'])->middleware(['auth']);
+Route::post('/insert-invoice', [InvoiceController::class, 'store'])->middleware(['auth']);
 
 Route::get('/invoice-details', function () {
     return view('Admin.invoice_details');
 })->middleware(['auth'])->name('invoice.details');
 
-Route::get('/all-invoice', [InvoiceController::class,'allInvoices'])->middleware(['auth'])->name('all.invoices');
+Route::get('/all-invoice', [InvoiceController::class, 'allInvoices'])->middleware(['auth'])->name('all.invoices');
 
-Route::get('/sold-products',[InvoiceController::class,'soldProducts'])->middleware(['auth'])->name('sold.products');
+Route::get('/sold-products', [InvoiceController::class, 'soldProducts'])->middleware(['auth'])->name('sold.products');
 // Route::get('/delete', [InvoiceController::class,'delete']);
 
 
 //order
-Route::get('/add-order/{name}', [ProductController::class,'formData'])->middleware(['auth'])->name('add.order');
+Route::get('/add-order/{name}', [ProductController::class, 'formData'])->middleware(['auth'])->name('add.order');
 
-Route::post('/insert-order',[OrderController::class,'store'])->middleware(['auth']);
+Route::post('/insert-order', [OrderController::class, 'store'])->middleware(['auth']);
 
-Route::get('/all-orders',[OrderController::class,'ordersData'])->middleware(['auth'])->name('all.orders');
+Route::get('/all-orders', [OrderController::class, 'ordersData'])->middleware(['auth'])->name('all.orders');
 
-Route::get('/pending-orders',[OrderController::class,'pendingOrders'])->middleware(['auth'])->name('pending.orders');
+Route::get('/pending-orders', [OrderController::class, 'pendingOrders'])->middleware(['auth'])->name('pending.orders');
 
-Route::get('/delivered-orders',[OrderController::class,'deliveredOrders'])->middleware(['auth'])->name('delivered.orders');
+Route::get('/delivered-orders', [OrderController::class, 'deliveredOrders'])->middleware(['auth'])->name('delivered.orders');
 
-Route::get('/new-order', [OrderController::class,'newformData'])->middleware(['auth'])->name('new.order');
+Route::get('/new-order', [OrderController::class, 'newformData'])->middleware(['auth'])->name('new.order');
 
-Route::post('/insert-new-order',[OrderController::class,'newStore'])->middleware(['auth']);
+Route::post('/insert-new-order', [OrderController::class, 'newStore'])->middleware(['auth']);
 
 
 //customer
@@ -78,20 +78,22 @@ Route::get('/add-customer', function () {
     return view('Admin.add_customer');
 })->middleware(['auth'])->name('add.customer');
 
-Route::post('/insert-customer',[CustomerController::class,'store'])->middleware(['auth']);
+Route::post('/insert-customer', [CustomerController::class, 'store'])->middleware(['auth']);
 
-Route::get('/all-customers',[CustomerController::class,'customersData'])->middleware(['auth'])->name('all.customers');
+Route::get('/all-customers', [CustomerController::class, 'customersData'])->middleware(['auth'])->name('all.customers');
 
 //post
-Route::get('/posts',[postController::class,'index'])->name('postlist');//route to post list page
-Route::get('/newpost', [postController::class,'create'])->middleware(['auth'])->name('createpost');//route to create post page
-Route::post('/insert-new-post',[postController::class,'store'])->name('newpost');//logic to create new post
-Route::get('/posts/{id}',[postController::class,'show'])->name('showlist');//route to edit post page
-Route::put('/edit-post/{id}',[postController::class,'update'])->name('editpost');//logic to edit post
-Route::delete('/posts/{id}',[postController::class,'destroy'])->name('deletepost');//logic to delete post
+Route::get('/posts', [postController::class, 'index'])->name('postlist');//route to post list page
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/newpost', [postController::class, 'create'])->middleware(['auth'])->name('createpost');//route to create post page
+    Route::post('/insert-new-post', [postController::class, 'store'])->name('newpost');//logic to create new post
+    Route::get('/posts/{id}', [postController::class, 'show'])->name('showlist');//route to edit post page
+    Route::put('/edit-post/{id}', [postController::class, 'update'])->name('editpost');//logic to edit post
+    Route::delete('/posts/{id}', [postController::class, 'destroy'])->name('deletepost');//logic to delete post
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
